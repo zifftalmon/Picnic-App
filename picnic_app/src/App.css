@@ -21,6 +21,18 @@ nav h1 {
 nav ul > li {
   margin: 1em;
 }
+.homeDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.homeDiv h3{
+  text-align: center;
+  width: 40%;
+  line-height: 1.5;
+}
 
 @media screen and (min-width: 375px) and (max-width: 667px) {
   nav {
