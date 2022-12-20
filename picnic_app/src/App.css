@@ -18,9 +18,14 @@ nav ul {
 nav h1 {
   margin: 1em;
 }
-nav ul > li {
+nav ul > li, Link {
   margin: 1em;
 }
+
+Link {
+  text-decoration: none;
+}
+
 .homeDiv {
   display: flex;
   flex-direction: column;
