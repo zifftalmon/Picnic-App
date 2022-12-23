@@ -11,7 +11,6 @@ import {
     ComboboxList,
     ComboboxOption,
 } from '@reach/combobox';
-// import '@reach/combobox/style.css'
 
 const containerStyle = {
     width: '500px',
@@ -19,8 +18,8 @@ const containerStyle = {
   };
   
   const center = {
-    lat: 31.771959,
-    lng: 35.217018
+    lat: 31.77195,
+    lng: 35.21701
   };
 
 const SearchLocation = (props) => {
@@ -35,7 +34,7 @@ const SearchLocation = (props) => {
       const [selected, setSelected] = React.useState(null);
 
       const onLoad = React.useCallback(function callback(map) {
-        // This is just an example of getting and using the map instance!!! don't just blindly copy!  
+        
         const bounds = new window.google.maps.LatLngBounds(center);
         map.fitBounds(bounds);
     
@@ -48,21 +47,17 @@ const SearchLocation = (props) => {
     
       return isLoaded ? (
         <div className='searchDiv'>
-        <form>
-            <input type='text' placeholder='search for a location'/>
-            <input type='submit' value='search'/>
-        </form>
             <div>
                 <PlacesAutoComplete setSelected={setSelected} />
             </div>
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={6}
-            onLoad={onLoad}
+            zoom={10}
+            // onLoad={onLoad}
             onUnmount={onUnmount}
           >
-            <Marker position={{lat: 31,lng: 35}}/>
+            <Marker position={center}/>
             {selected && <Marker position={selected} />}
           </GoogleMap>
           </div>
