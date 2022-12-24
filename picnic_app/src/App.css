@@ -92,7 +92,7 @@ Link {
   background-color: rgba(95, 158, 160, 0.28);
 }
 .listForm input[type=submit] {
-  transition: 0.5s;
+  transition: 0.3s;
   width: 20%;
   padding: 5px;
   margin: 10px;
@@ -102,7 +102,7 @@ Link {
 }
 .listForm input[type=submit]:hover {
   scale: 1.1;
-  transition: 0.5s;
+  transition: 0.3s;
   background-color: rgba(95, 158, 160, 0.465);
   cursor: pointer;
 }
@@ -129,7 +129,7 @@ Link {
   text-decoration: line-through;
 }
 .listDiv button {
-  transition: 0.5s;
+  transition: 0.3s;
   font-size: 20px;
   border: none;
   border-radius: 30%;
@@ -138,7 +138,7 @@ Link {
 }
 .listDiv button:hover {
   scale: 1.1;
-  transition: 0.5s;
+  transition: 0.3s;
   background-color: rgba(95, 158, 160, 0.465);
   cursor: pointer;
 }

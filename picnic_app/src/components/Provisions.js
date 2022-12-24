@@ -23,6 +23,14 @@ const Provisions = () => {
             e.currentTarget.style.textDecoration = ''
         }
     }
+
+    const handleCheck = (e) => {
+        if(e.target.checked) {
+            e.target.nextSibling.style.textDecoration = 'line-through'
+        }else{
+            e.target.nextSibling.style.textDecoration = ''
+        }
+    }
     
     return (
         <div>
@@ -37,8 +45,8 @@ const Provisions = () => {
                                 return(
                                     <div className="listDiv" key={i}>
                                         <div className="item">
-                                            <input name={item} type='checkbox' id={item}/>
-                                            <label for={item} onClick={handleLine}>{item}</label> 
+                                            <input onChange={handleCheck} name={item} type='checkbox' id={item}/>
+                                            <label htmlFor={item} onClick={handleLine} style={{textDecoration:line}}>{item}</label> 
                                         </div>
                                         <button id={i} onClick={removeItem}>delete item</button>
                                     </div>
