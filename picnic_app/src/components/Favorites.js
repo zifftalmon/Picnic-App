@@ -1,11 +1,13 @@
-import Search from "./Search.tsx"
+import React from "react"
+import Search from "./Search"
+import { useLoadScript } from "@react-google-maps/api";
 
-const Favorites = () => {
-    return(
-        <div>
-            <Search/>
-        </div>
-    )
+export default function Favorites() {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyAGfyc1R8xD4DL6Ic_6x63QzXXDW-qjAEs',
+    libraries: ["places"],
+  });
+
+  if (!isLoaded) return <div>Loading...</div>;
+  return <Search />;
 }
-
-export default Favorites
