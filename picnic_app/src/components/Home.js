@@ -4,6 +4,7 @@ import {
   useLoadScript,
   Marker,
   InfoWindow,
+  DirectionsService
 } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -56,13 +57,14 @@ const Home = (props) => {
 
       const panTo = useCallback(({lat,lng}) => {
         mapRef.current.panTo({lat,lng})
-        mapRef.current.setZoom(13)
+        mapRef.current.setZoom(8)
       }, [])
 
     if (!isLoaded) return <div>Loading...</div>;
     return (
         <div className="homeDiv">
             <div className="homeDesc">
+            <Locate panTo={panTo}/>
                 <h4>Welcome! Our guess is you're going on a picnic...</h4>
                 <h2>great!</h2>
                 <h4>Let's find a cool place suited for your needs, if you need some help take a look at our reccomandations page.<br/>
@@ -91,13 +93,13 @@ const Home = (props) => {
                     onClick={() => {
                         setSelected(marker)
                     }}
-                />
+                    />
                 ))}   
                 {selected ? (<InfoWindow position={{lat: selected.lat, lng: selected.lng}} 
                 onCloseClick={() => {
                     setSelected(null)
                 }}>
-                    <div>
+                    <div className="infoWindow">
                         <h2>camping site occupied!</h2>
                         <p>updated: {formatRelative(selected.time, new Date())}</p>
                     </div>
@@ -148,7 +150,6 @@ const Search = ({ panTo }) => {
             const results = await getGeocode({address})
             const {lat,lng} = await getLatLng(results[0])
             panTo({lat,lng})
-            console.log(lat, lng);
         }catch (e){
             console.log('error!');
         }
@@ -159,7 +160,7 @@ const Search = ({ panTo }) => {
           disabled={!ready}
           placeholder="Search your location"
         />
-        <ComboboxPopover>
+        <ComboboxPopover className="placeList">
           <ComboboxList>
             {status === "OK" &&
               data.map(({ id, description }) => (

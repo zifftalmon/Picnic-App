@@ -22,9 +22,14 @@ nav h1 {
 nav ul > li, Link {
   margin: 1em;
 }
-
 Link {
   text-decoration: none;
+}
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
 }
 
 .homeDiv {
@@ -40,8 +45,12 @@ Link {
   height: 100vh;
   flex-direction: column;
 }
-.homeDiv .homeDesc  input {
+.homeDiv .homeDesc input {
   width: 95%;
+  background-color: rgb(194, 192, 192);
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
 }
 .mapDiv {
   width: 80%;
@@ -50,6 +59,36 @@ Link {
 .map {
   width: 100%;
   height: 100vh;
+  border-radius: 50%;
+}
+.infoWindow{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: 2.5em;
+  color: rgb(44, 83, 44);
+  line-height: 0.1;
+}
+.placeList{
+  list-style: none;
+  background-color: rgb(194, 192, 192);
+  text-align: left;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.placeList ul {
+  list-style: none;
+  line-height: 1.1;
+}
+.placeList ul > li {
+  transition: 0.3s;
+}
+.placeList ul > li:hover {
+  transition: 0.3s;
+  font-size: 18px;
+  cursor: pointer;
 }
 .provisions {
   display: flex;
