@@ -18,15 +18,11 @@ const Reccomandations = () => {
             <div className="recGrid">
                 {rec.map((item,id) => {
                     return(
-                        <Link key={id} to={`/recommendations/${item.id}`} 
-                              onClick={() => {
-                                setPath(item.id)
-                                setRecTitle(item.title)
-                        }}>
+                        <Link style={{textDecoration:'none', color:'black'}} key={id} to={`/recommendations/${item.id}`}>
                             <div key={id} id={id} className="recDiv">
                                 <img src={item.image}/>
-                                <h4>{item.title}</h4>
-                                <h5>{item.location}</h5>
+                                <h5>{item.title}</h5>
+                                <h6>{item.location}</h6>
                             </div>
                         </Link>
                     )

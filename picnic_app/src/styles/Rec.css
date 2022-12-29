@@ -4,29 +4,36 @@
   }
   .recGrid {
     display: grid;
-    grid-template-columns: repeat(2,200px);
-    grid-template-rows: repeat(3,230px);
+    grid-template-columns: repeat(3,180px);
+    grid-template-rows: repeat(2,200px);
   }
   .recDiv {
-    width: 10vw;
+    text-align: center;
+    width: 11vw;
     height: 30vh;
-    padding: 1em;
+    padding: 5px;
     margin: 1em;
     background-color: rgba(185, 86, 86, 0.746);
     border-radius: 20%;
     transition: 0.3s;
-    line-height: 0.7;
+    line-height: 0.5;
   }
+  .recDiv h6 {
+    margin: 10px auto;
+  }
+  
   .recDiv:hover {
     transition: 0.3s;
     scale: 1.1;
     cursor: pointer;
-    font-size: 17px;
   }
   .recDiv img {
-    width: 9vw;
-    border-radius: 20%;
-    height: 18vh;
+      width: 9vw;
+      border-radius: 20%;
+      height: 18vh;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 5px;
   }
   .recMap {
     width: 100%;

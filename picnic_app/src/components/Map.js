@@ -57,7 +57,7 @@ const Map = (props) => {
 
       const panTo = useCallback(({lat,lng}) => {
         mapRef.current.panTo({lat,lng})
-        mapRef.current.setZoom(10)
+        mapRef.current.setZoom(13)
       }, [])
 
     if (!isLoaded) return <div>Loading...</div>;
