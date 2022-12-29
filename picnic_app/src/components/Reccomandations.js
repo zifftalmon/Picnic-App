@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
-import { Route,Routes,useNavigate } from "react-router-dom"
-import RecPage from "./RecPage"
+import { Link } from "react-router-dom"
 import Map from "./Map"
 
 const Reccomandations = () => {
@@ -11,36 +10,31 @@ const Reccomandations = () => {
     useEffect(() => {
         fetch('http://localhost:3001/recommendations')
             .then(res => res.json())
-            .then(data => data.map(item => { return setRec(list => [...list, item]) }))
+            .then(data => data.map(item => { return setRec(recs => [...recs, item]) }))
     }, [])
-
-    const handleClick = (e) => {
-        console.log(e);
-        setPath(e.target.id)
-        setRecTitle(e.target.children[1].textContent)
-    }
-
-    console.log(path,recTitle);
-
+    
     return(
     <div className="recContainer">
             <div className="recGrid">
                 {rec.map((item,id) => {
                     return(
-                        <div id={id+1} className="recDiv" onClick={handleClick}>
-                            <img src={item.image}/>
-                            <h4>{item.title}</h4>
-                            <h5>{item.location}</h5>
-                        </div>
+                        <Link key={id} to={`/recommendations/${item.id}`} 
+                              onClick={() => {
+                                setPath(item.id)
+                                setRecTitle(item.title)
+                        }}>
+                            <div key={id} id={id} className="recDiv">
+                                <img src={item.image}/>
+                                <h4>{item.title}</h4>
+                                <h5>{item.location}</h5>
+                            </div>
+                        </Link>
                     )
                 })}
             </div>
             <div className="recMap">
                 <Map/>
             </div>
-            <Routes>
-                <Route path={`/${path}`} element={<RecPage title={recTitle}/>}/>
-            </Routes>
     </div>
     )
 }
