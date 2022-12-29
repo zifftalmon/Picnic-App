@@ -6,6 +6,10 @@ import Reccomandations from './components/Reccomandations';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
 import './styles/Provisions.css'
+import './styles/Nav.css'
+import './styles/Map.css'
+import './styles/Rec.css'
+
 
 function App() {
   return (
@@ -16,7 +20,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/provisions' element={<Provisions/>}/>
           <Route path='/favorites' element={<Favorites/>}/>
-          <Route path='/recommendations' element={<Reccomandations/>}/>
+          <Route path='/recommendations/*' element={<Reccomandations/>}/>
         </Routes>
       </div>
     </BrowserRouter>

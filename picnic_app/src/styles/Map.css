@@ -1,0 +1,67 @@
+.homeDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+  }
+  .homeDiv .homeDesc {
+    display: flex;
+    padding: 1em;
+    width: 40%;
+    height: 100vh;
+    flex-direction: column;
+  }
+  .homeDiv .homeDesc input {
+    width: 99%;
+    height: 5vh;
+    background-color: rgb(194, 192, 192);
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .mapDiv {
+    width: 80%;
+    height: 100vh;
+    margin-right: 3em;
+  }
+  .map {
+    width: 100%;
+    height: 100vh;
+  }
+  .infoWindow{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 2.5em;
+    color: rgb(44, 83, 44);
+    line-height: 0.1;
+  }
+  .locate {
+    width: 7vw;
+    position: absolute;
+    right: 4em;
+    top: 8em;
+    z-index: 99;
+    cursor: pointer;
+  }
+  .placeList{
+    list-style: none;
+    background-color: rgb(194, 192, 192);
+    text-align: left;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  .placeList ul {
+    list-style: none;
+    line-height: 1.5;
+  }
+  .placeList ul > li {
+    transition: 0.3s;
+  }
+  .placeList ul > li:hover {
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  

@@ -57,7 +57,7 @@ const Map = (props) => {
 
       const panTo = useCallback(({lat,lng}) => {
         mapRef.current.panTo({lat,lng})
-        mapRef.current.setZoom(8)
+        mapRef.current.setZoom(10)
       }, [])
 
     if (!isLoaded) return <div>Loading...</div>;
@@ -72,7 +72,7 @@ const Map = (props) => {
           <GoogleMap
               mapContainerClassName="map"
               options={options}
-              zoom={8}
+              zoom={10}
               center={center}
               onClick={onMapClick}
               onLoad={onMapLoad}
@@ -133,7 +133,7 @@ const Search = ({ panTo }) => {
   const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete({
     requestOptions: {
       location: { lat: () => 31.77, lng: () => 35.21 },
-      radius: 200 * 1000 
+      radius: 100 * 1000 
     }
   })  
     const handleInput = (e) => {

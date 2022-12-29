@@ -5,7 +5,7 @@ const Navbar = (props) => {
         <div>
             <nav>
                 <div className="icon">
-                    <img alt='picnic-img' src="icons8-picnic-64 (2).png"/>
+                    <Link style={{textDecoration:'none', color:'black'}} to='/'><img alt='picnic-img' src="icons8-picnic-64 (2).png"/></Link>
                     <h1><Link style={{textDecoration:'none', color:'black'}} to='/'>Ap|picnic</Link></h1>
                 </div>
                 <ul>

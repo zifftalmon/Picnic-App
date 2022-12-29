@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react"
+import { Route,Routes,useNavigate } from "react-router-dom"
+import RecPage from "./RecPage"
 import Map from "./Map"
 
 const Reccomandations = () => {
     const [rec, setRec] = useState([])
+    const [path, setPath] = useState()
+    const [recTitle, setRecTitle] = useState()
 
     useEffect(() => {
         fetch('http://localhost:3001/recommendations')
@@ -10,17 +14,23 @@ const Reccomandations = () => {
             .then(data => data.map(item => { return setRec(list => [...list, item]) }))
     }, [])
 
-    console.log(rec);
+    const handleClick = (e) => {
+        console.log(e);
+        setPath(e.target.id)
+        setRecTitle(e.target.children[1].textContent)
+    }
+
+    console.log(path,recTitle);
 
     return(
     <div className="recContainer">
             <div className="recGrid">
-                {rec.map(item => {
+                {rec.map((item,id) => {
                     return(
-                        <div className="recDiv">
+                        <div id={id+1} className="recDiv" onClick={handleClick}>
                             <img src={item.image}/>
-                            <p>{item.title}</p>
-                            <p>{item.location}</p>
+                            <h4>{item.title}</h4>
+                            <h5>{item.location}</h5>
                         </div>
                     )
                 })}
@@ -28,6 +38,9 @@ const Reccomandations = () => {
             <div className="recMap">
                 <Map/>
             </div>
+            <Routes>
+                <Route path={`/${path}`} element={<RecPage title={recTitle}/>}/>
+            </Routes>
     </div>
     )
 }
