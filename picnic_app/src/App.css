@@ -31,7 +31,9 @@ Link {
   align-items: center;
   margin-left: 10px;
 }
-
+.intro {
+  line-height: 1.1;
+}
 .homeDiv {
   display: flex;
   justify-content: space-between;
@@ -46,7 +48,9 @@ Link {
   flex-direction: column;
 }
 .homeDiv .homeDesc input {
-  width: 95%;
+  width: 99%;
+  height: 5vh;
+  font-size: 19px;
   background-color: rgb(194, 192, 192);
   outline: none;
   border: none;
@@ -55,11 +59,11 @@ Link {
 .mapDiv {
   width: 80%;
   height: 100vh;
+  margin-right: 3em;
 }
 .map {
   width: 100%;
   height: 100vh;
-  border-radius: 50%;
 }
 .infoWindow{
   display: flex;
@@ -71,6 +75,14 @@ Link {
   color: rgb(44, 83, 44);
   line-height: 0.1;
 }
+.locate {
+  width: 7vw;
+  position: absolute;
+  right: 4em;
+  top: 8em;
+  z-index: 99;
+  cursor: pointer;
+}
 .placeList{
   list-style: none;
   background-color: rgb(194, 192, 192);
@@ -80,7 +92,8 @@ Link {
 }
 .placeList ul {
   list-style: none;
-  line-height: 1.1;
+  line-height: 1.5;
+  font-size: 19px;
 }
 .placeList ul > li {
   transition: 0.3s;
@@ -90,172 +103,28 @@ Link {
   font-size: 18px;
   cursor: pointer;
 }
-.provisions {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.toggle {
-  margin: 2em;
-  --width: 150px;
-  --height: calc(var(--width) / 3.5);
-  position: relative;
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
-  width: var(--width);
-  height: var(--height);
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: var(--height);
-  cursor: pointer;
-}
 
-.toggle input {
-  display: none;
-}
-
-.toggle .slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--height);
-  background-color: #ccc;
-  transition: all 0.4s ease-in-out;
-}
-
-.toggle .slider::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(var(--height));
-  height: calc(var(--height));
-  border-radius: calc(var(--height) / 2);
-  background-color: #fff;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease-in-out;
-}
-
-.toggle input:checked+.slider {
-  background-color: #ccc;
-}
-
-.toggle input:checked+.slider::before {
-  transform: translateX(calc(var(--width) - var(--height)));
-}
-
-.toggle .labels {
-  position: absolute;
-  top: 8px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  font-family: sans-serif;
-  transition: all 0.4s ease-in-out;
-  font-size: 17px;
-}
-
-.toggle .labels::after {
-  content: attr(data-off);
-  position: absolute;
-  right: 5px;
-  color: #4d4d4d;
-  opacity: 1;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
-  transition: all 0.4s ease-in-out;
-}
-
-.toggle .labels::before {
-  content: attr(data-on);
-  position: absolute;
-  left: 5px;
-  color: #ffffff;
-  opacity: 0;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
-  transition: all 0.4s ease-in-out;
-}
-
-.toggle input:checked~.labels::after {
-  opacity: 0;
-}
-
-.toggle input:checked~.labels::before {
-  opacity: 1;
-}
-.listForm {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-  margin: 1em;
-  width: 70%;
-  border: 1px solid rgba(0, 0, 0, 0.099);
-  border-radius: 20px;
-}
-.listForm input[type=text] {
-  width: 80%;
-  height: 5vh;
-  font-size: 20px;
-  margin: 1em;
-  border-radius: 8px;
-  outline: none;
-  border: none;
-  background-color: rgba(95, 158, 160, 0.28);
-}
-.listForm input[type=submit] {
-  transition: 0.3s;
-  width: 20%;
-  padding: 5px;
-  margin: 10px;
-  border-radius: 15px;
-  border: 1px solid black;
-  font-size: 15px;
-}
-.listForm input[type=submit]:hover {
-  scale: 1.1;
-  transition: 0.3s;
-  background-color: rgba(95, 158, 160, 0.465);
-  cursor: pointer;
-}
-.list {
-  display: flex;
-  flex-direction: column;
-}
-.listDiv {
+.recContainer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid black;
 }
-.listDiv input {
-  scale: 1.2;
-  background-color: #F6EDD9;
-  cursor: pointer;
+.recGrid {
+  display: flex;
+  flex-direction: column;
 }
-.listDiv .item{
-  margin-right: 12em;
-  font-size: 35px;
+.recDiv {
+  width: 10vw;
+  height: 30vh;
+  padding: 1em;
+  margin: 1em;
+  border: 3px solid red;
 }
-.listDiv label:hover {
-  cursor: pointer;
-  text-decoration: line-through;
+.recDiv img {
+  width: 100px;
+  height: 100px;
 }
-.listDiv button {
-  transition: 0.3s;
-  font-size: 20px;
-  border: none;
-  border-radius: 30%;
-  cursor: pointer;
-  background-color: rgba(95, 158, 160, 0.28);
-}
-.listDiv button:hover {
-  scale: 1.1;
-  transition: 0.3s;
-  background-color: rgba(95, 158, 160, 0.465);
-  cursor: pointer;
+.recMap {
+  width: 100%;
 }
 
 

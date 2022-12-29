@@ -5,6 +5,7 @@ import Favorites from './components/Favorites';
 import Reccomandations from './components/Reccomandations';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
+import './styles/Provisions.css'
 
 function App() {
   return (
