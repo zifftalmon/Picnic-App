@@ -49,3 +49,12 @@ app.get('/recommendations', (req,res) => {
         res.send(rows)
     })
 })
+
+app.get('/recommendations/:id', (req,res) => {
+    db('recommendations')
+    .select('*')
+    .where(db['id'] = req.params)
+    .then(rows => {
+        res.send(rows)
+    })
+})
