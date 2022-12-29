@@ -33,11 +33,18 @@ app.post('/provisions', (req,res) => {
 })
 
 app.delete('/provisions/', (req,res) => {
-    console.log(req.body);
     db('provisions')
     .delete('*')
     .where(db['name'] = req.body)
     .returning('*')
+    .then(rows => {
+        res.send(rows)
+    })
+})
+
+app.get('/recommendations', (req,res) => {
+    db('recommendations')
+    .select('*')
     .then(rows => {
         res.send(rows)
     })
