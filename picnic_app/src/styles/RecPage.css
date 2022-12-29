@@ -1,3 +1,33 @@
-.rec-div {
-    width: 100px;
+.recBox {
+    display: flex;
+    margin: 2em;
+}
+.recBox .recSpan {
+    text-align: left;
+    margin: 2em;
+    width:40%;
+    line-height: 1.5; 
+}
+.recBox .recSpan .spanLoc {
+    text-align: right;
+}
+.recBox .recSpan h3 {
+    text-align: center;
+}
+.recBox img {
+    width: 45%;
+    height: 60vh;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 10px;
+}
+.recFeatures {
+    display: flex;
+    justify-content: space-evenly;
+}
+.recFeatures div {
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
 }

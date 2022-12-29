@@ -4,12 +4,14 @@ import RecPage from './components/RecPage';
 import Provisions from './components/Provisions';
 import Favorites from './components/Favorites';
 import Reccomandations from './components/Reccomandations';
-import {BrowserRouter, Routes, Route, useParams} from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
 import './styles/Provisions.css'
 import './styles/Nav.css'
 import './styles/Map.css'
 import './styles/Rec.css'
+import './styles/RecPage.css'
+import './styles/RecMap.css'
 
 
 function App() {

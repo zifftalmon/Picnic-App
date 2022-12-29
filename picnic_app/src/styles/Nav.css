@@ -13,11 +13,13 @@ nav {
   nav h1 {
     margin: 1em;
   }
-  nav ul > li, Link {
+  nav ul > li {
     margin: 1em;
+    transition: 0.3s;
   }
-  Link {
-    text-decoration: none;
+  nav ul > li:hover {
+    transition: 0.3s;
+    scale: 1.1;
   }
   .icon {
     display: flex;
