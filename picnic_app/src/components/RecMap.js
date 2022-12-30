@@ -10,46 +10,48 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import { formatRelative } from "date-fns";
+
 
 const libraries = ['places']
 
 const style = {
-    width:'100%',
-    height:'100vh'
+  width:'100%',
+  height:'100vh'
 }
 
 const options = {
-    disableDefaultUI: true,
-    zoomControl: true
+  disableDefaultUI: true,
+  zoomControl: true
 }
 const center = {
-    lat: 31.77,
-    lng: 35.21
+  lat: 31.77,
+  lng: 35.21
 }
 
 const RecMap = (props) => {
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-        libraries
-})
-
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    libraries
+  })
+  
+const [marker, setMarker] = useState({})
 
 const mapRef = useRef();
 const onMapLoad = useCallback((map) => {
   mapRef.current = map
+  const getLocation = async(address) => {
+    const call = await getGeocode({address})
+    console.log(call[0]);
+    const {lat,lng} = await getLatLng(call[0])
+    setMarker({lat,lng})
+    panTo({lat,lng})
+  }
+  getLocation(props.address)
 }, [])
 
 const panTo = useCallback(({lat,lng}) => {
   mapRef.current.panTo({lat,lng})
-  mapRef.current.setZoom(13)
+  mapRef.current.setZoom(10)
 }, [])
 
 if (!isLoaded) return <div>Loading...</div>;
@@ -63,13 +65,16 @@ if (!isLoaded) return <div>Loading...</div>;
               zoom={8}
               center={center}
               onLoad={onMapLoad}
-          ></GoogleMap>
+          >
+            <Marker position={marker}/>
+          </GoogleMap>
         </div>
     </div>
     )
 }
 
 function Locate({ panTo }) {
+    const [marker, setMarker] = useState({})
     return (
       <button
         className="locateRec"
@@ -82,7 +87,7 @@ function Locate({ panTo }) {
               });
             },
             () => null
-          );
+            );
         }}
       >
         <img src="/icons8-compass-south-48.png" alt="compass" />
