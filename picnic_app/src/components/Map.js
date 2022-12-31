@@ -1,5 +1,6 @@
-import { useState,useCallback, useRef } from "react";
+import { useState,useCallback, useRef, useMemo } from "react";
 import {
+  useJsApiLoader,
   GoogleMap,
   useLoadScript,
   Marker,
@@ -29,7 +30,10 @@ const center = {
     lat: 31.77,
     lng: 35.21
 }
-
+const newMarker = {
+  lat:'',
+  lng:''
+}
 const Map = (props) => {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -39,7 +43,6 @@ const Map = (props) => {
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
     const [locationState, setLocationState] = useState('vacant')
-    const [favoriteTitle, setFavoriteTitle] = useState()
 
     const onMapClick = useCallback((e) => {
         setMarkers((current) => [
@@ -71,8 +74,19 @@ const Map = (props) => {
       }
 
       const handleFavorite = (e) => {
-        e.preventDefault();
-        console.log(e);
+        fetch('http://localhost:3001/favorites', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                { 
+                title:e.target[0].value,
+                description:e.target[1].value, 
+                latitude:e.target.childNodes[0].innerHTML,
+                longitude:e.target.childNodes[1].innerHTML
+                })
+        })
       }
 
     if (!isLoaded) return <div>Loading...</div>;
@@ -82,7 +96,7 @@ const Map = (props) => {
           <Locate panTo={panTo}/>
           <Search panTo={panTo}/>
         </div>
-        
+
         <div className="mapDiv">
           <GoogleMap
               mapContainerClassName="map"
@@ -107,7 +121,7 @@ const Map = (props) => {
               setSelected(marker)
           }}
           />
-            ))}   
+          ))}   
         {selected ? (<InfoWindow position={{lat: selected.lat, lng: selected.lng}} 
         onCloseClick={() => {
             setSelected(null)
@@ -120,7 +134,8 @@ const Map = (props) => {
                   <p style={{position:'absolute',visibility:'hidden'}}>{selected.lng}</p>
                   {/* <input type='checkbox' id='check' onChange={handleCheck}/>
                   <label htmlFor="check">i'm travelling here</label> */}
-                  <input type='text' placeholder="location name" onChange={(e) => {setFavoriteTitle(e.target.value)}}/>
+                  <input type='text' placeholder="location name"/>
+                  <input type='text' placeholder="tell us about this location"/>
                   <br/>
                   <input type='submit' value='add to favorites'/>
                 </form>
@@ -159,12 +174,14 @@ const Search = ({ panTo }) => {
       location: { lat: () => 31.77, lng: () => 35.21 },
       radius: 100 * 1000 
     }
-  })  
-    const handleInput = (e) => {
-        setValue(e.target.value);
-      };
+  })
 
-    return (
+  
+  const handleInput = (e) => {
+    setValue(e.target.value);
+  };
+  
+  return (
     <div className="search">
       <Combobox onSelect={async (address) => {
         setValue(address, false);
