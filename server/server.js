@@ -15,6 +15,14 @@ app.listen(process.env.PORT||5000, () => {
     console.log(`run on port ${process.env.PORT}||5000`);
 })
 
+const __dirname = path.resolve(); 
+ 
+app.use(express.static(path.join(__dirname, './picnic_app/build'))) 
+ 
+app.get('*', (req,res)=>{ 
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html')) 
+})
+
 app.get('/provisions', (req,res) => {
     db('provisions')
     .select('name')
@@ -42,6 +50,33 @@ app.delete('/provisions/', (req,res) => {
     })
 })
 
+app.get('/lists', (req,res) => {
+    db('provisions_lists')
+    .select('*')
+    .then(rows => {
+        res.send(rows)
+    })
+})
+
+app.get('/lists/:id', (req,res) => {
+    db('provisions_lists')
+    .select('*')
+    .where(db['id'] = req.params)
+    .then(rows => {
+        res.send(rows)
+    })
+})
+
+
+app.post('/lists',(req,res) => {
+    db('provisions_lists')
+    .insert(req.body)
+    .returning('*')
+    .then(rows => {
+        res.json(rows)
+    })
+})
+
 app.get('/recommendations', (req,res) => {
     db('recommendations')
     .select('*')
@@ -54,6 +89,41 @@ app.get('/recommendations/:id', (req,res) => {
     db('recommendations')
     .select('*')
     .where(db['id'] = req.params)
+    .then(rows => {
+        res.send(rows)
+    })
+})
+
+app.post('/recommendations', (req,res) => {
+    db('recommendations')
+    .insert(req.body)
+    .returning('*')
+    .then(rows => {
+        res.send(rows)
+    })
+})
+
+app.get('/favorites', (req,res) => {
+    db('favorites')
+    .select('*')
+    .then(rows => {
+        res.send(rows)
+    })
+})
+
+app.get('/favorites/:id', (req,res) => {
+    db('favorites')
+    .select('*')
+    .where(db['id'] = req.params)
+    .then(rows => {
+        res.send(rows)
+    })
+})
+
+app.post('/favorites', (req,res) => {
+    db('favorites')
+    .insert(req.body)
+    .returning('*')
     .then(rows => {
         res.send(rows)
     })
