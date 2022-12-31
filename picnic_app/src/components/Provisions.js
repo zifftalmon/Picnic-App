@@ -3,8 +3,6 @@ import Status from "./Status"
 
 const Provisions = () => {
     const [list, setList] = useState(['water', 'hat', 'snacks'])
-    const [location, setLocation] = useState('')
-    const [listName, setListName] = useState('')
 
 
     useEffect(() => {
@@ -50,10 +48,18 @@ const Provisions = () => {
     }
 
     const handleListName = (e) => {
-        e.preventDefault()
-        console.log(e.target[0].value);
-        setLocation(e.target[0].value)
-        setListName(e.target[1].value)
+        fetch('http://localhost:3001/lists', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                { 
+                location:e.target[0].value,
+                name:e.target[1].value, 
+                items:list
+                })
+        })
     }
 
     return (

@@ -10,6 +10,7 @@ const Navbar = (props) => {
                 </div>
                 <ul>
                     <li><Link style={{textDecoration:'none', color:'black'}} to='/provisions'>Provision List & Status</Link></li>
+                    <li><Link style={{textDecoration:'none', color:'black'}} to='/Lists'>Saved Lists</Link></li>
                     <li><Link style={{textDecoration:'none', color:'black'}} to='/recommendations'>Recommendations</Link></li>
                     <li><Link style={{textDecoration:'none', color:'black'}} to='/favorites'>Favorite Locations</Link></li>
                 </ul>

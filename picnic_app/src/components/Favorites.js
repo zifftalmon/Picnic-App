@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import RecMap from "./RecMap";
 
 const Favorites = () => {
   const [favoriteList,setFavoriteList] = useState([])
@@ -12,13 +11,13 @@ const Favorites = () => {
   console.log(favoriteList);
   return(
     <div>
-      <h1>favorites</h1>
       {
         favoriteList.map(item => {
           return(
             <div key={item.id}>
               <h1>{item.title}</h1>
-              <RecMap/>
+              <h2>{item.description}</h2>
+              {/* <h3>{item.latitude},{item.longitude}</h3> */}
             </div>
           )
         })

@@ -1,6 +1,7 @@
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import RecPage from './components/RecPage';
+import Lists from './components/Lists';
 import Provisions from './components/Provisions';
 import Favorites from './components/Favorites';
 import Reccomandations from './components/Reccomandations';
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home/>}/>
           <Route path='/provisions' element={<Provisions/>}/>
+          <Route path='/lists' element={<Lists/>}/>
           <Route path='/favorites' element={<Favorites/>}/>
           <Route path='/recommendations' element={<Reccomandations/>}/>
           <Route path='/recommendations/:id' element={<RecPage/>}/>
