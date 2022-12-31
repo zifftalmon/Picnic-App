@@ -1,7 +1,6 @@
 import { useState,useEffect } from "react"
 import { useParams } from "react-router-dom"
 import RecMap from "./RecMap";
-import ErrorBoundary from "./ErrorBoundary";
 
 const RecPage = () => {
     const {id} = useParams();
