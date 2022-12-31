@@ -1,102 +1,126 @@
-import { useState,useCallback, useRef, useMemo } from "react";
+import { useState,useCallback, useRef } from "react";
 import {
-  useJsApiLoader,
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-  DirectionsService
+  DirectionsService,
+  DirectionsRenderer,
+  Autocomplete
 } from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
 import { formatRelative, set } from "date-fns";
+
 
 const libraries = ['places']
 
 const options = {
-    disableDefaultUI: true,
+  disableDefaultUI: true,
     zoomControl: true
 }
 const center = {
     lat: 31.77,
     lng: 35.21
 }
-const newMarker = {
-  lat:'',
-  lng:''
-}
+
 const Map = (props) => {
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-        libraries
-      });
-    
-    const [markers, setMarkers] = useState([]);
-    const [selected, setSelected] = useState(null);
-    const [locationState, setLocationState] = useState('vacant')
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    libraries
+  });  
 
-    const onMapClick = useCallback((e) => {
-        setMarkers((current) => [
-          ...current,
-          {
-            lat: e.latLng.lat(),
-            lng: e.latLng.lng(),
-            time: new Date(),
-          },
-        ]);
-      }, []);
+//STATES AND REF
+  const [markers, setMarkers] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [locationState, setLocationState] = useState('vacant')
+  const [directionResponse, setDirectionResponse] = useState(null);
+  const [distance,setDistance] = useState('')
+  const [duration, setDuration] = useState('')
+    /** @type React.MutableRefObject<HTMLInputElement> */
+    const originRef = useRef()
+    /** @type React.MutableRefObject<HTMLInputElement> */
+    const destinationRef = useRef()
 
-      const mapRef = useRef();
-      const onMapLoad = useCallback((map) => {
-        mapRef.current = map
-      }, [])
 
-      const panTo = useCallback(({lat,lng}) => {
-        mapRef.current.panTo({lat,lng})
-        mapRef.current.setZoom(10)
-      }, [])
-
-      const handleCheck = (e) => {
-        if(e.target.checked) {
-          setLocationState('occupied')
-        } else {
-          setLocationState('vacant')
-        }
-      }
-
+//FUNCTION FOR SETTING MARKERS
+  const onMapClick = useCallback((e) => {
+    setMarkers((current) => [
+      ...current,
+      {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        time: new Date(),
+      },
+    ]);
+  }, []);
+//MAPREF TO PREVENT CONSTANT RENRENDERING
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map
+    }, [])
+//FUNCTION FOR PANNING THE MAP
+    const panTo = useCallback(({lat,lng}) => {
+      mapRef.current.panTo({lat,lng})
+      mapRef.current.setZoom(10)
+    }, [])
+//POST REQUEST FOR ADDING LOCATIONS TO FAVORITES PAGE
       const handleFavorite = (e) => {
         fetch('http://localhost:3001/favorites', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                { 
-                title:e.target[0].value,
-                description:e.target[1].value, 
-                latitude:e.target.childNodes[0].innerHTML,
-                longitude:e.target.childNodes[1].innerHTML
-                })
-        })
-      }
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(
+            { 
+              title:e.target[0].value,
+              description:e.target[1].value, 
+              latitude:e.target.childNodes[0].innerHTML,
+              longitude:e.target.childNodes[1].innerHTML
+            })
+          })
+        }
 
-    if (!isLoaded) return <div>Loading...</div>;
-    return (
-      <div className="homeDiv">
+        // const location = navigator.geolocation.getCurrentPosition(mapRef.current)
+        // console.log(location);
+
+        const getRoute = async () => {
+          const directions = new window.google.maps.DirectionsService();
+          const result = await directions.route({
+            origin:originRef.current.value,
+            destination:destinationRef.current.value,
+            //eslint-disable-next-line no-undef
+            travelMode: google.maps.TravelMode.DRIVING
+          })
+          setDirectionResponse(result)
+          setDistance(result.routes[0].legs[0].distance.text)
+          setDuration(result.routes[0].legs[0].duration.text)
+        }
+
+        const clearRoute = () => {
+          setDirectionResponse(null)
+          setDistance('')
+          setDuration('')
+        }
+
+        console.log(originRef.current.value);
+        
+        if (!isLoaded) return <div>Loading...</div>;
+        return (
+          <div className="homeDiv">
         <div className="homeDesc">
+          <DirectionsService options/>
           <Locate panTo={panTo}/>
-          <Search panTo={panTo}/>
+          {/* <Search panTo={panTo}/> */}
+          <Autocomplete>
+          <input type='text' placeholder="origin" required ref={originRef}/>
+          </Autocomplete>
+          <Autocomplete>
+          <input type='text' placeholder="destination" required ref={destinationRef}/>
+          </Autocomplete>
+          <br/>
+          <input type='submit' value='find Route' onClick={getRoute}/>
+          <h1>{distance}</h1>
+          <h2>{duration}</h2>
         </div>
-
         <div className="mapDiv">
           <GoogleMap
               mapContainerClassName="map"
@@ -107,24 +131,24 @@ const Map = (props) => {
               onLoad={onMapLoad}
               >
           {markers.map((marker) => (
-          
-          <Marker
-          key={`${marker.lat}-${marker.lng}`}
-          position={{ lat: marker.lat, lng: marker.lng }}
-          icon={{
+            <Marker
+            key={`${marker.lat}-${marker.lng}`}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            icon={{
               url:'/icons8-picnic-64 (1).png',
               scaledSize: new window.google.maps.Size(30, 30),
               origin: new window.google.maps.Point(0,0),
               anchor: new window.google.maps.Point(15,15)
-          }}
-          onClick={() => {
+            }}
+            onClick={() => {
               setSelected(marker)
-          }}
-          />
-          ))}   
+            }}
+            />
+            ))}
+            {directionResponse && <DirectionsRenderer directions={directionResponse}/> }
         {selected ? (<InfoWindow position={{lat: selected.lat, lng: selected.lng}} 
         onCloseClick={() => {
-            setSelected(null)
+          setSelected(null)
         }}>
             <div className="infoWindow">
                 <h2>{`location is ${locationState}`}</h2>
@@ -145,22 +169,21 @@ const Map = (props) => {
         </div>
       </div>
     )
-}
-
-function Locate({ panTo }) {
+  }
+  
+  function Locate({ panTo }) {
     return (
       <button
-        className="locate"
-        onClick={() => {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
+      className="locate"
+      onClick={() => {
+      navigator.geolocation.getCurrentPosition((position) => {
               panTo({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               });
             },
             () => null
-          );
+            );
         }}
       >
         <img src="/icons8-compass-south-48.png" alt="compass" />
@@ -168,49 +191,5 @@ function Locate({ panTo }) {
     );
   }
 
-const Search = ({ panTo }) => {
-  const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 31.77, lng: () => 35.21 },
-      radius: 100 * 1000 
-    }
-  })
-
-  
-  const handleInput = (e) => {
-    setValue(e.target.value);
-  };
-  
-  return (
-    <div className="search">
-      <Combobox onSelect={async (address) => {
-        setValue(address, false);
-        clearSuggestions();
-        try {
-          const results = await getGeocode({address})
-          const {lat,lng} = await getLatLng(results[0])
-          panTo({lat,lng})
-        }catch (e){
-            console.log('error!');
-        }
-      }}>
-        <ComboboxInput
-          value={value}
-          onChange={handleInput}
-          disabled={!ready}
-          placeholder="Search for a location"
-        />
-        <ComboboxPopover className="placeList">
-          <ComboboxList>
-            {status === "OK" &&
-              data.map(({ id, description }) => (
-                <ComboboxOption key={id} value={description} />
-              ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
-    </div>
-  );
-}
 
 export default Map
