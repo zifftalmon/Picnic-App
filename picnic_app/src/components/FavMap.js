@@ -29,7 +29,7 @@ const center = {
   lng: 35.21
 }
 
-const RecMap = (props) => {
+const FavMap = (props) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries
@@ -40,13 +40,12 @@ const [marker, setMarker] = useState({})
 const mapRef = useRef();
 const onMapLoad = useCallback((map) => {
   mapRef.current = map
-  const getLocation = async(address) => {
-    const call = await getGeocode({address}) 
-    const {lat,lng} = await getLatLng(call[0])
-    setMarker({lat,lng})
+  const getLocation = async(lat,lng) => {
+      setMarker({lat,lng})
+      console.log({lat,lng});
     panTo({lat,lng})
   }
-  getLocation(props.address)
+  getLocation(props.address.lat,props.address.lng)
 }, [])
 
 const panTo = useCallback(({lat,lng}) => {
@@ -99,4 +98,4 @@ function Locate({ panTo }) {
       </button>
     );
   }
-export default RecMap
+export default FavMap

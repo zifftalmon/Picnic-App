@@ -165,3 +165,12 @@
     background-color: rgba(95, 158, 160, 0.465);
     cursor: pointer;
   }
+  .provisionsForm {
+    margin: 3em;
+  }
+  .provisionsForm input {
+    margin: 1em;
+  }
+  .provisionsForm input[type=submit] {
+    cursor: pointer;
+  }

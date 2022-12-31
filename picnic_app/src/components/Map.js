@@ -94,32 +94,29 @@ const Map = (props) => {
           setDistance(result.routes[0].legs[0].distance.text)
           setDuration(result.routes[0].legs[0].duration.text)
         }
-
         const clearRoute = () => {
           setDirectionResponse(null)
           setDistance('')
           setDuration('')
-        }
-
-        console.log(originRef.current.value);
-        
+        }        
         if (!isLoaded) return <div>Loading...</div>;
         return (
           <div className="homeDiv">
         <div className="homeDesc">
+          <h1>enter a new route</h1>
           <DirectionsService options/>
+          <div className="routeInput">
+            <Autocomplete>
+            <input type='text' placeholder="origin" ref={originRef}/>
+            </Autocomplete>
+            <Autocomplete>
+            <input type='text' placeholder="destination" ref={destinationRef}/>
+            </Autocomplete>
+          </div>
+
+            <button onClick={getRoute}>find Route</button>
+            <button onClick={clearRoute}>clear Route</button>
           <Locate panTo={panTo}/>
-          {/* <Search panTo={panTo}/> */}
-          <Autocomplete>
-          <input type='text' placeholder="origin" required ref={originRef}/>
-          </Autocomplete>
-          <Autocomplete>
-          <input type='text' placeholder="destination" required ref={destinationRef}/>
-          </Autocomplete>
-          <br/>
-          <input type='submit' value='find Route' onClick={getRoute}/>
-          <h1>{distance}</h1>
-          <h2>{duration}</h2>
         </div>
         <div className="mapDiv">
           <GoogleMap
@@ -190,6 +187,5 @@ const Map = (props) => {
       </button>
     );
   }
-
 
 export default Map

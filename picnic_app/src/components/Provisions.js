@@ -89,7 +89,7 @@ const Provisions = () => {
                     {
                         list.length > 0 ?
                             <div>
-                                <form onSubmit={handleListName}>
+                                <form className="provisionsForm" onSubmit={handleListName}>
                                     <input type='text' placeholder="location" />
                                     <input type='text' placeholder="list name" />
                                     <input type='submit' value='save list' />

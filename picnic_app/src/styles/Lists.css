@@ -1,0 +1,20 @@
+.listContainer {
+    display: grid;
+    justify-content: center;
+    /* align-items: center; */
+    grid-template-columns: repeat(2,380px);
+    grid-template-rows: repeat(3,250px);
+}
+.savedList {
+    transition: 0.3s;
+    width: 20em;
+    height: 13em;
+    border: 3px solid red;
+    margin: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.savedList:hover {
+    transition: 0.3s;
+    scale: 1.1;
+}

@@ -1,0 +1,19 @@
+.favoritesDiv {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 2em;
+}
+.favoriteItem {
+    transition: 0.3s;
+    padding: 1.5em;
+    border-radius: 60%;
+    width: 18vw;
+    background-color: rgba(185, 86, 86, 0.746);
+    cursor: pointer;
+}
+.favoriteItem:hover {
+    transition: 0.3s;
+    scale: 1.1;
+
+}
