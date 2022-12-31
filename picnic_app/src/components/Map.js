@@ -64,7 +64,7 @@ const Map = (props) => {
     }, [])
 //POST REQUEST FOR ADDING LOCATIONS TO FAVORITES PAGE
       const handleFavorite = (e) => {
-        fetch('http://localhost:3001/favorites', {
+        fetch('/favorites', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
