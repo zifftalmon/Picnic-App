@@ -55,7 +55,6 @@ const Provisions = () => {
         setLocation(e.target[0].value)
         setListName(e.target[1].value)
     }
-    console.log(location, listName);
 
     return (
         <div>

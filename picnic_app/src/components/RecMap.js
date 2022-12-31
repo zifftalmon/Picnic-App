@@ -4,7 +4,8 @@ import {
   useLoadScript,
   Marker,
   InfoWindow,
-  DirectionsService
+  DirectionsService,
+  DirectionsRenderer
 } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -40,8 +41,7 @@ const mapRef = useRef();
 const onMapLoad = useCallback((map) => {
   mapRef.current = map
   const getLocation = async(address) => {
-    const call = await getGeocode({address})
-    console.log(call[0]);
+    const call = await getGeocode({address}) 
     const {lat,lng} = await getLatLng(call[0])
     setMarker({lat,lng})
     panTo({lat,lng})
@@ -50,6 +50,11 @@ const onMapLoad = useCallback((map) => {
 }, [])
 
 const panTo = useCallback(({lat,lng}) => {
+  mapRef.current.panTo({lat,lng})
+  mapRef.current.setZoom(10)
+}, [])
+ 
+const calculate = useCallback(({lat,lng}) => {
   mapRef.current.panTo({lat,lng})
   mapRef.current.setZoom(10)
 }, [])
@@ -74,7 +79,6 @@ if (!isLoaded) return <div>Loading...</div>;
 }
 
 function Locate({ panTo }) {
-    const [marker, setMarker] = useState({})
     return (
       <button
         className="locateRec"
@@ -85,6 +89,7 @@ function Locate({ panTo }) {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               });
+              
             },
             () => null
             );
@@ -94,4 +99,34 @@ function Locate({ panTo }) {
       </button>
     );
   }
+
+  async function CalcRoute(props,{ calculate }) {
+    // eslint-disable-next-line no-undef
+    const directions = google.maps.DirectionsService()
+    const result = await directions.route({
+      origin:props.origin,
+      destination:props.destination,
+    // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING
+    })
+    return (
+      <button
+        onClick={() => {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              calculate({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              });
+              console.log(position);
+            },
+            () => null
+            );
+        }}
+      >
+        <img src="/icons8-compass-south-48.png" alt="compass" />
+      </button>
+    );
+  }
+
 export default RecMap

@@ -17,7 +17,7 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-import { formatRelative } from "date-fns";
+import { formatRelative, set } from "date-fns";
 
 const libraries = ['places']
 
@@ -38,6 +38,8 @@ const Map = (props) => {
     
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
+    const [locationState, setLocationState] = useState('vacant')
+    const [favoriteTitle, setFavoriteTitle] = useState()
 
     const onMapClick = useCallback((e) => {
         setMarkers((current) => [
@@ -57,8 +59,21 @@ const Map = (props) => {
 
       const panTo = useCallback(({lat,lng}) => {
         mapRef.current.panTo({lat,lng})
-        mapRef.current.setZoom(13)
+        mapRef.current.setZoom(10)
       }, [])
+
+      const handleCheck = (e) => {
+        if(e.target.checked) {
+          setLocationState('occupied')
+        } else {
+          setLocationState('vacant')
+        }
+      }
+
+      const handleFavorite = (e) => {
+        e.preventDefault();
+        console.log(e);
+      }
 
     if (!isLoaded) return <div>Loading...</div>;
     return (
@@ -76,7 +91,7 @@ const Map = (props) => {
               center={center}
               onClick={onMapClick}
               onLoad={onMapLoad}
-          >
+              >
           {markers.map((marker) => (
           
           <Marker
@@ -98,8 +113,17 @@ const Map = (props) => {
             setSelected(null)
         }}>
             <div className="infoWindow">
-                <h2>camping site occupied!</h2>
+                <h2>{`location is ${locationState}`}</h2>
                 <p>updated: {formatRelative(selected.time, new Date())}</p>
+                <form onSubmit={handleFavorite}>
+                  <p style={{position:'absolute',visibility:'hidden'}}>{selected.lat}</p>
+                  <p style={{position:'absolute',visibility:'hidden'}}>{selected.lng}</p>
+                  {/* <input type='checkbox' id='check' onChange={handleCheck}/>
+                  <label htmlFor="check">i'm travelling here</label> */}
+                  <input type='text' placeholder="location name" onChange={(e) => {setFavoriteTitle(e.target.value)}}/>
+                  <br/>
+                  <input type='submit' value='add to favorites'/>
+                </form>
             </div>
         </InfoWindow>): null}
             </GoogleMap>

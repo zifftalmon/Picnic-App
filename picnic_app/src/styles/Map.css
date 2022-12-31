@@ -40,6 +40,19 @@
     color: rgb(44, 83, 44);
     line-height: 0.1;
   }
+  .infoWindow form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .infoWindow form .fileLabel {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
   .locate {
     width: 7vw;
     position: absolute;
