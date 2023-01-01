@@ -15,8 +15,6 @@ app.use(express.urlencoded({extended:true}))
 app.listen(process.env.PORT||5000, () => {
     console.log(`run on port ${process.env.PORT}||5000`);
 })
-
-console.log(__dirname);
  
 app.use(express.static(path.join(__dirname, './picnic_app/build'))) 
  
