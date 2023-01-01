@@ -5,7 +5,7 @@ const Lists = () => {
     const [lists,setLists] = useState([])
 
     useEffect(() => {
-        fetch('/lists')
+        fetch('http://localhost:3001/lists')
         .then(res => res.json())
         .then(data => data.map(item => { return setLists(list => [...list, item]) }))
       },[])

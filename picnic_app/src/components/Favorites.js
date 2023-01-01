@@ -5,7 +5,7 @@ const Favorites = () => {
   const [favoriteList,setFavoriteList] = useState([])
 
   useEffect(() => {
-    fetch('/favorites')
+    fetch('http://localhost:3001/favorites')
     .then(res => res.json())
     .then(data => data.map(item => { return setFavoriteList(list => [...list, item]) }))
   },[])

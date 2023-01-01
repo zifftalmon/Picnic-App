@@ -6,7 +6,7 @@ const Provisions = () => {
 
 
     useEffect(() => {
-        fetch('/provisions')
+        fetch('http://localhost:3001/provisions')
             .then(res => res.json())
             .then(data => data.map(item => { return setList(list => [...list, item.name]) }))
     }, [])
@@ -14,7 +14,7 @@ const Provisions = () => {
 
 
     const handleSubmit = (e) => {
-        fetch('/provisions', {
+        fetch('http://localhost:3001/provisions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ const Provisions = () => {
 
     const removeItem = (e) => {
         console.log(e);
-        fetch(`/provisions`, {
+        fetch(`http://localhost:3001/provisions`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ const Provisions = () => {
     }
 
     const handleListName = (e) => {
-        fetch('/lists', {
+        fetch('http://localhost:3001/lists', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
