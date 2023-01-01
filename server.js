@@ -12,17 +12,18 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
+console.log(__dirname);
+ 
+app.use(express.static(path.join(__dirname, './picnic_app/build'))) 
+ 
+app.get('', (req,res)=>{ 
+  res.sendFile(path.join(__dirname, './picnic_app/build','index.html')) 
+})
+
 app.listen(process.env.PORT||5000, () => {
     console.log(`run on port ${process.env.PORT}||5000`);
 })
 
-console.log(path.resolve(__dirname));
- 
-app.use(express.static(path.join('./picnic_app/build'))) 
- 
-app.get('*', (req,res)=>{ 
-  res.sendFile(path.resolve(__dirname, './picnic_app','build','index.html')) 
-})
 
 app.get('/provisions', (req,res) => {
     db('provisions')
