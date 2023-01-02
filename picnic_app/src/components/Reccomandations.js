@@ -7,7 +7,7 @@ const Reccomandations = () => {
     const [form, setForm] = useState('hidden')
 
     useEffect(() => {
-        fetch('http://localhost:3001//recommendations')
+        fetch('http://localhost:3001/recommendations')
             .then(res => res.json())
             .then(data => data.map(item => { return setRec(recs => [...recs, item]) }))
     }, [])

@@ -7,7 +7,7 @@ const RecPage = () => {
     const [details, setDetails] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:3001//recommendations/${id}`)
+        fetch(`http://localhost:3001/recommendations/${id}`)
             .then(res => res.json())
             .then(data => data.map(item => {return setDetails(recs => [...recs, item])}))
     }, [id])   

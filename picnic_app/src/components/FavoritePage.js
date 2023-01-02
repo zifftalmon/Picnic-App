@@ -8,7 +8,7 @@ const FavoritesPage = () => {
     const [details, setDetails] = useState([])
 
     useEffect(() => {
-        fetch(`/favorites/${id}`)
+        fetch(`http://localhost:3001/favorites/${id}`)
             .then(res => res.json())
             .then(data => data.map(item => {return setDetails(recs => [...recs, item])}))
     }, [id])   
