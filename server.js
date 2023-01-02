@@ -38,7 +38,7 @@ app.post('/provisions', (req,res) => {
     .insert(req.body)
     .returning('*')
     .then(rows => {
-        res.json(rows)
+        res.send(rows)
     })
 })
 
@@ -75,7 +75,7 @@ app.post('/lists',(req,res) => {
     .insert(req.body)
     .returning('*')
     .then(rows => {
-        res.json(rows)
+        res.send(rows)
     })
 })
 
