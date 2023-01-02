@@ -21,8 +21,8 @@ const Provisions = () => {
             },
             body: JSON.stringify({ name: e.target[0].value })
         })
-            .then(data => data.json())
-            .then(res => setList(list => [...list, res]))
+            // .then(data => data.json())
+            // .then(res => setList(list => [...list, res]))
     }
 
     const removeItem = (e) => {
