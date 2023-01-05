@@ -7,7 +7,7 @@ import Favorites from './components/Favorites';
 import Provisions from './components/Provisions';
 import FavoritesPage from './components/FavoritePage';
 import Reccomandations from './components/Reccomandations';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {HashRouter, Routes, Route} from 'react-router-dom'
 import './App.css';
 import './styles/Provisions.css'
 import './styles/Nav.css'
@@ -23,7 +23,7 @@ import './styles/Lists.css'
 function App() {
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <Navbar/>
         <Routes>
@@ -37,7 +37,7 @@ function App() {
           <Route path='/favorites/:id' element={<FavoritesPage/>}/>
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
