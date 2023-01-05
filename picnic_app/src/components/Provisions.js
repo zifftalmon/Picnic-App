@@ -21,8 +21,8 @@ const Provisions = () => {
             },
             body: JSON.stringify({ name: e.target[0].value })
         })
-            // .then(data => data.json())
-            // .then(res => setList(list => [...list, res]))
+            .then(data => data.json())
+            .then(res => setList(list => [...list, res]))
     }
 
     const removeItem = (e) => {
@@ -34,9 +34,9 @@ const Provisions = () => {
             },
             body: JSON.stringify({ name: e.target.previousSibling.textContent })
         })
-        //     .then(res => res.json())
-        // list.splice(e.target.id, 1)
-        // setList([...list])
+            .then(res => res.json())
+        list.splice(e.target.id, 1)
+        setList([...list])
     }
 
     const handleCheck = (e) => {
